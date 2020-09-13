@@ -3,8 +3,10 @@
 This repo contains code for sample tasks
 
 Status:
+
     - added initial version of code 
     - SQL queries
 
-TODO
+TODO:
+
     - React component
