@@ -55,8 +55,8 @@ form {
   height: 300px;
 }
 #circle {
-  width: 100px;
-  height: 100px;
+  width: 50px;
+  height: 50px;
   border: 1px solid #000;
   border-radius: 50px;
 }
