@@ -11,9 +11,9 @@ const App = props => {
 
   return (
     <div id="container">
-      <div id="circle" style={{ backgroundColor: color }} />
-      <input type="text" ref={inputRef} />
+      <input type="text" ref={inputRef} placeholder="Enter Color Name"/>
       <input type="button" onClick={handleButtonClick} value="Change Circle Color" />
+      <div id="circle" style={{ backgroundColor: color }} />
     </div>
   )
 }
