@@ -11,7 +11,7 @@ type Person struct {
 }
 
 func findDuplicates(person []Person) int {
-	arr := make(map[string]bool,15)
+	arr := make(map[string]bool, 15)
 	for firstIndex, _ := range person {
 		strPerson := strconv.Itoa(person[firstIndex].Age)
 		if arr[strPerson] {
@@ -29,7 +29,6 @@ func isPersonTwiceOldAsOthers(person []Person) bool {
 		return false
 	}
 
-	//arr := make(map[string]bool,15)
 	duplicate := findDuplicates(person)
 
 	if duplicate == 0 {
@@ -37,7 +36,7 @@ func isPersonTwiceOldAsOthers(person []Person) bool {
 	}
 
 	for firstIndex, _ := range person {
-		if (person[firstIndex].Age == 2 * duplicate) {
+		if person[firstIndex].Age == 2*duplicate {
 			return true
 		}
 	}
@@ -45,74 +44,78 @@ func isPersonTwiceOldAsOthers(person []Person) bool {
 	return false
 }
 
-// TODO - update bruteforce algo with efficient to have O(n)
 func isPersonAtleastTwiceOldAsOthers(person []Person) bool {
 
-	if len(person) < 2 {
-		fmt.Printf("Need minimum 2 person's age to continue\n")
+	if len(person) == 0 {
 		return false
+	} else if len(person) == 1 {
+		return true
 	}
 
-	for firstIndex, _ := range person {
-		for secondIndex, _ :=  range person {
-			if (person[firstIndex].Age <= person[secondIndex].Age) {
-				continue
-			}
-			if (person[firstIndex].Age >= 2 * person[secondIndex].Age) {
-				return true
-			}
+	// O(n) approach
+	// first let us find the index of max person age
+	personMaxAgeIndex := 0
+	for index, _ := range person {
+		if person[index].Age > person[personMaxAgeIndex].Age {
+			personMaxAgeIndex = index
 		}
 	}
-	return false
+	// now check if the max person age is at least as twice as others
+	for index, _ := range person {
+		if personMaxAgeIndex != index && person[personMaxAgeIndex].Age < 2*person[index].Age {
+			return false
+		}
+	}
+	return true
 }
 
 func main() {
-	
+
 	var personList = []Person{}
 	// test values
-	personList = []Person {
-		Person {Age: 20},
-		Person {Age: 55},
-		Person {Age: 45},
-		Person {Age: 65},
-		Person {Age: 55},
-		Person {Age: 100},
+	personList = []Person{
+		Person{Age: 20},
+		Person{Age: 55},
+		Person{Age: 45},
+		Person{Age: 65},
+		Person{Age: 55},
+		Person{Age: 100},
 	}
-	fmt.Printf("%v\n",isPersonTwiceOldAsOthers(personList))  // returns false
+	fmt.Printf("%v\n", isPersonTwiceOldAsOthers(personList)) // returns false
 
-	personList = []Person {
-		Person {Age: 20},
-		Person {Age: 50},
-		Person {Age: 45},
-		Person {Age: 65},
-		Person {Age: 45},
-		Person {Age: 90},
+	personList = []Person{
+		Person{Age: 20},
+		Person{Age: 50},
+		Person{Age: 45},
+		Person{Age: 65},
+		Person{Age: 45},
+		Person{Age: 90},
 	}
-	fmt.Printf("%v\n",isPersonTwiceOldAsOthers(personList))  // returns true
-
-	// test values
-	personList = []Person {
-		Person {Age: 3},
-		Person {Age: 2},
-		Person {Age: 1},
-		Person {Age: 4},
-	}
-	fmt.Printf("%v\n",isPersonAtleastTwiceOldAsOthers(personList)) // return true
+	fmt.Printf("%v\n", isPersonTwiceOldAsOthers(personList)) // returns true
 
 	// test values
-	personList = []Person {
-		Person {Age: 6},
-		Person {Age: 7},
-		Person {Age: 8},
-		Person {Age: 9},
+	personList = []Person{
+		Person{Age: 3},
+		Person{Age: 2},
+		Person{Age: 1},
+		Person{Age: 4},
 	}
-	fmt.Printf("%v\n",isPersonAtleastTwiceOldAsOthers(personList)) // return false
+	fmt.Printf("%v\n", isPersonAtleastTwiceOldAsOthers(personList)) // return false
+
 	// test values
-	personList = []Person {
-		Person {Age: 1},
-		Person {Age: 9},
-		Person {Age: 9},
-		Person {Age: 9},
+	personList = []Person{
+		Person{Age: 6},
+		Person{Age: 5},
+		Person{Age: 4},
+		Person{Age: 12},
 	}
-	fmt.Printf("%v\n",isPersonAtleastTwiceOldAsOthers(personList)) // return true
+	fmt.Printf("%v\n", isPersonAtleastTwiceOldAsOthers(personList)) // return true
+	// test values
+	personList = []Person{
+		Person{Age: 10},
+		Person{Age: 5},
+		Person{Age: 9},
+		Person{Age: 20},
+	}
+	fmt.Printf("%v\n", isPersonAtleastTwiceOldAsOthers(personList)) // return true
 }
