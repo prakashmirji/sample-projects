@@ -1,51 +1,26 @@
 import ReactDOM from 'react-dom';
-import React  from 'react';
- 
-class App extends React.Component {
+import React, {useState, useRef}  from 'react';
 
-  changeCircleColor = (colorinfo) => {
-    console.log(colorinfo);
-  };
+const App = props => {
+	const [color, setColor] = useState('black')
+  const inputRef = useRef(null)
 
-  render() {
-    return (
-      <div>
-      <Form onSubmit={this.changeCircleColor}/>
-      </div>
-    );
-  }
-}
-
-class Form extends React.Component {
-  state = {colorName: ""}
-
-  handleSubmit = async(event) => {
-    event.preventDefault();
-    const resp = this.state.colorName
-    this.props.onSubmit(resp)
-    this.setState({colorName:""})
+  const handleButtonClick = () => {
+      setColor(inputRef.current.value || 'black')
   }
 
-	render() {
-  	return (
-    	<form onSubmit={this.handleSubmit}>
-      <span className="formtext">&#x3C;App /&#x3E;</span>
-    	  <input 
-          type="text" 
-          value={this.state.colorName}
-          onChange={event => this.setState({colorName: event.target.value})}
-          placeholder="Enter Color Name" 
-          required 
-        />
-        <button>Change Circle Color</button>
-    	</form>
-    );
-  }
+  return (
+  	<div id="container">
+      <div id="circle" style={{backgroundColor: color}} />
+  	  <input type="text" ref={inputRef} />
+      <input type="button" onClick={handleButtonClick} value="Change Circle Color" />
+  	</div>
+  )
 }
 
 ReactDOM.render(
   <App />, 
   document.getElementById('root'),
 );
- 
+
 export default App;

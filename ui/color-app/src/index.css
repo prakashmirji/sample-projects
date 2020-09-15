@@ -28,10 +28,35 @@ form {
   color: black;
 }
 
-.circle {
-  height: 50x;
-  width: 50x;
+/* .circle {
+  height: 50px;
+  width: 50px;
   background-color: black;
-  border-radius: 100%;
+  border-radius: 50%;
   display: inline-block;
+} */
+
+/* body {
+  background: #20262E;
+  padding: 20px;
+  font-family: Helvetica;
+} */
+#app {
+  background: #fff;
+  border-radius: 4px;
+  padding: 20px;
+  transition: all 0.2s;
+}
+#container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  height: 300px;
+}
+#circle {
+  width: 100px;
+  height: 100px;
+  border: 1px solid #000;
+  border-radius: 50px;
 }
