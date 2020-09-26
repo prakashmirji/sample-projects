@@ -10,7 +10,7 @@ lastname VARCHAR(50)
 CREATE TABLE tweets (
 tweet_id INT AUTO_INCREMENT PRIMARY KEY,
 tweet TEXT,
-publication_date DATE,
+publication_date TIMESTAMP,
 user_id INT
 );
 
@@ -29,10 +29,9 @@ SELECT username, firstname, lastname, tweet, publication_date
 FROM users, tweets where users.user_id = tweets.user_id AND users.user_id in  (SELECT follower_id from followers f, users u where
 f.user_id = u.user_id and u.username = 'mark') ORDER BY tweets.publication_date DESC LIMIT 30
 
-# LIMIT first parameter is the offset ( start index) and second param is the count of records to fetch
-# I read an article which says avoid using offset, instead use keyset to fetch the accurate values
-# also, offset is hard coded in the below query but can be arguments in real world example
+# using tweet created timestamp to get the last one minute tweets instead of using offset approach.
+# using timestamp, you can get duplicate tweets if one of Marks followers tweeted between the time the two queries ran
 
 SELECT username, firstname, lastname, tweet, publication_date
-FROM users, tweets where users.user_id = tweets.user_id AND users.user_id in  (SELECT follower_id from followers f, users u where
-f.user_id = u.user_id and u.username = 'mark') ORDER BY tweets.publication_date DESC LIMIT 30,30
+FROM users, tweets where users.user_id = tweets.user_id AND publication_date >= NOW() - INTERVAL 1 MINUTE AND users.user_id in  (SELECT follower_id from followers f, users u where
+f.user_id = u.user_id and u.username = 'mark') ORDER BY tweets.publication_date DESC LIMIT 30
